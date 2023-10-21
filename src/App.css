@@ -7,11 +7,13 @@
   min-height: 100vh;
   color: #fff;
 }
+
 @font-face {
   font-family: FrizQuadrataStd;
   src: url('./assets/fonts/Friz Quadrata Std Regular.otf') format("opentype");
 }
-.App *{
+
+.App * {
   font-family: FrizQuadrataStd;
 }
 
@@ -22,26 +24,29 @@
   border: .1rem solid #737373;
   border-radius: 5px;
   transition: border .25s ease;
-  box-shadow: 0 54px 55px rgba(0,0,0,.25),0 -12px 30px rgba(0,0,0,.12),0 4px 6px rgba(0,0,0,.12),0 12px 13px rgba(0,0,0,.17),0 -3px 5px rgba(0,0,0,.09);
+  box-shadow: 0 54px 55px rgba(0, 0, 0, .25), 0 -12px 30px rgba(0, 0, 0, .12), 0 4px 6px rgba(0, 0, 0, .12), 0 12px 13px rgba(0, 0, 0, .17), 0 -3px 5px rgba(0, 0, 0, .09);
   aspect-ratio: auto 405/358;
 }
 
-.searchBar{
+.searchBar {
   position: relative;
   display: flex;
   justify-content: center;
 }
-.searchBar input{
+
+.searchBar input {
   width: 200px;
   color: #black;
   background-color: #1d2227;
   padding: 15px 15px 13px;
   border: 2px solid #0b708a;
 }
-.searchBar input:focus{
+
+.searchBar input:focus {
   outline: none;
 }
-.searchBar button{
+
+.searchBar button {
   height: auto;
   border: 2px solid #c77129;
   background-color: #1d2227;
@@ -52,7 +57,8 @@
   padding: 6px 15px;
 
 }
-.searchBar ul{
+
+.searchBar ul {
   position: absolute;
   left: 0;
   right: 0;
@@ -66,6 +72,93 @@
   max-height: 150px;
   background-color: #1d2227;
 }
-.searchBar ul li{
+
+.searchBar ul li {
   padding: 10px 0;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
+}
+
+.shakeAnimation {
+  /* Start the shake animation and make the animation last for 0.5 seconds */
+  animation: shake 0.5s;
+
+  /* When the animation is finished, start again */
+  animation-iteration-count: infinite;
+}
+
+
+.initWin{
+  animation-name: winSpin;
+  animation-duration: 1.5s;
+}
+
+@keyframes winSpin {
+  0% {transform: rotate(0deg); scale: 1}
+  100% {transform: rotate(360deg); scale: 0}
+}
+
+.initAgain{
+  position: relative;
+  top: 50px;
+  margin-bottom: 18px;
+  padding: 6px 12px 4px;
+  background-color: #1d2227;
+  color: white;
+  border: solid 2px #0b708a;
+  animation-name: initAgainShow;
+  animation-duration: 0.5s;
+  transition: 0.2s;
+  box-shadow: 3px 3px #074a5b;
+}
+.initAgain:active{
+  box-shadow: 0.2px 0.2px #074a5b;
+}
+
+.form{
+  margin-top: 2vh;
 }

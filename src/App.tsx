@@ -1,78 +1,145 @@
 import React, { useEffect, useRef, useState } from "react";
-import './App.css';
-import {dataObjects} from "./data/dataObjects";
+import "./App.css";
+import { card, dataObjects } from "./data/dataObjects";
 import {
   Button,
+  Container,
   Dropdown,
   Form,
   Grid,
   Header,
+  Icon,
   Image,
   Input,
   Message,
+  Modal,
   Segment,
 } from "semantic-ui-react";
 
 function App() {
-  const [answer, setAnswer] = useState(dataObjects[Math.floor(Math.random() * dataObjects.length)])
-  const [sizeMultipler, setSizeMultipler] = useState(8)
-  const [attempt, setAttempt] = useState()
-  const [winSpin, setWinSpin] = useState('')
-  const [win, setWin] = useState(false)
+  const [answer, setAnswer] = useState<card>(
+    dataObjects[Math.floor(Math.random() * dataObjects.length)]
+  );
+  const [sizeMultiplier, setSizeMultiplier] = useState<number>(10);
+  const [attempt, setAttempt] = useState<string[]>([]);
+  const [animation, setAnimation] = useState<string>("");
+  const [win, setWin] = useState(false);
+  const [value, setValue] = useState<string>();
+
   const initReset = () => {
-      setTimeout(() => {
-          setWinSpin('');
-          setWin(false);
-      },300)
-  }
+    setAnimation("");
+    setAttempt([]);
+    setWin(false);
+    setAnswer(dataObjects[Math.floor(Math.random() * dataObjects.length)]);
+    setSizeMultiplier(8);
+  };
 
-  const updateAnswer = (o:any):void=>{
-    setAttempt(o)
-  }
+  const updateAnswer = (o: string): void => {
+    setValue(o);
+  };
 
-  const attemptAnswer = ():void=>{
-    setAttempt(undefined)
-    if(answer.id===attempt){
-      setWin(true)
-    }else{
-      if(sizeMultipler>2){
-        setSizeMultipler(prev=>prev-0.5)
-        setAttempt(undefined)
+  const attemptAnswer = (): void => {
+    console.log(value, attempt);
+    if (value && !attempt.includes(value)) {
+      setAttempt([value, ...attempt]);
+    }
+  };
+
+  useEffect(() => {
+    if (attempt.length) {
+      if (answer.id === attempt[0]) {
+        setWin(true);
+      } else {
+        setAnimation("shakeAnimation");
+        setTimeout(() => {
+          setAnimation("");
+          setValue("");
+        }, 300);
+        if (sizeMultiplier > 2) {
+          setSizeMultiplier((prev) => prev - 0.5);
+        }
       }
     }
-  }
+  }, [attempt]);
+
+  useEffect(() => {
+    if (win) {
+      setAnimation("initWin");
+    }
+  }, [win]);
 
   return (
     <div className="App">
-      <Grid
-        textAlign="center"
-        style={{ height: "50vh" }}
-        verticalAlign="middle"
-      >
+      <h1>
+        AHCardle Card Guessor - Pic
+        <Modal
+          trigger={<Icon name="question circle outline" />}
+          header="AH Cardle"
+          content={
+            <Container fluid>
+              <p>Test your Arkham card pool knowledge skills!</p>
+              <p>
+                Look at the picture, to guess the card, wrong guess, the pic will zoom out a little bit (until a maximum)
+              </p>
+            </Container>
+          }
+          actions={[{ key: "Close", content: "Close" }]}
+        />
+      </h1>
+      <Grid textAlign="center" verticalAlign="middle">
         <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h2" color="teal" textAlign="center">
-            <Segment stacked style={{  width: "30vw",  height: "30vw", overflow: "hidden", margin:"auto"}} className="segment">
-                <img
-                src={`https://arkhamdb.com/${answer.imagesrc}`}
-                style={{ margin:`${sizeMultipler*-5}vw ${sizeMultipler*-12}vw`, height:`${sizeMultipler*42}vw`, width:`${sizeMultipler*30}vw`}}
-                />
-              </Segment>
-          </Header>
+          <Segment
+            stacked
+            style={{
+              width: "25vw",
+              height: "25vw",
+              overflow: "hidden",
+              margin: "auto",
+              border: 0,
+            }}
+            className="segment"
+          >
+            <img
+              src={`https://arkhamdb.com/${answer?.imagesrc}`}
+              style={{
+                margin: `${sizeMultiplier * -5}vw ${sizeMultiplier * -12}vw`,
+                height: `${sizeMultiplier * 42}vw`,
+                width: `${sizeMultiplier * 30}vw`,
+              }}
+            />
+          </Segment>
           <Form size="large">
-          {win && <button className='initAgain' onClick={initReset}>Play again!</button>}
-            <div className="searchBar">
-            <Dropdown
-                  placeholder='Type card name...'
+            {win ? (
+              <Button onClick={() => initReset()} content="Play again!" />
+            ) : (
+              <div className={`searchBar ${animation}`}>
+                <Dropdown
+                  placeholder="Type card name..."
                   search
                   selection
-                  clearable
-                  value={attempt}
-                  onChange={(_,o)=>updateAnswer(o.value)}
-                  options={dataObjects.map(o=>({key:o.id, value:o.id, text:o.name}))}
+                  fluid
+                  value={value}
+                  onChange={(_, o) => updateAnswer(o.value as string)}
+                  options={dataObjects
+                    .map((o) => ({
+                      key: o.id,
+                      value: o.id,
+                      text: o.name,
+                    }))
+                    .filter((o) => !attempt.includes(o.value))}
+                  className={animation}
+                />
+                <button onClick={attemptAnswer}>➤</button>
+              </div>
+            )}
+            {attempt.map((id: string, index) => (
+              <Message
+                key={`message-id-${id}`}
+                negative={!(win && index === 0)}
+                positive={win && index === 0}
+                header={dataObjects.find((card: card) => card.id === id)?.name}
               />
-              <button onClick={attemptAnswer}>➤</button>
-
-            </div>
+            ))}
           </Form>
         </Grid.Column>
       </Grid>
