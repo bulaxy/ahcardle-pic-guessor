@@ -1,38 +1,71 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  background-image: url("./assets/img/AHWallpaper.jpg");
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
   min-height: 100vh;
+  color: #fff;
+}
+@font-face {
+  font-family: FrizQuadrataStd;
+  src: url('./assets/fonts/Friz Quadrata Std Regular.otf') format("opentype");
+}
+.App *{
+  font-family: FrizQuadrataStd;
+}
+
+
+.segment {
+  width: 70%;
+  max-width: 750px;
+  border: .1rem solid #737373;
+  border-radius: 5px;
+  transition: border .25s ease;
+  box-shadow: 0 54px 55px rgba(0,0,0,.25),0 -12px 30px rgba(0,0,0,.12),0 4px 6px rgba(0,0,0,.12),0 12px 13px rgba(0,0,0,.17),0 -3px 5px rgba(0,0,0,.09);
+  aspect-ratio: auto 405/358;
+}
+
+.searchBar{
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.searchBar input{
+  width: 200px;
+  color: #black;
+  background-color: #1d2227;
+  padding: 15px 15px 13px;
+  border: 2px solid #0b708a;
 }
+.searchBar input:focus{
+  outline: none;
+}
+.searchBar button{
+  height: auto;
+  border: 2px solid #c77129;
+  background-color: #1d2227;
+  color: #c77129;
+  box-sizing: border-box;
+  border-radius: 0 30% 30% 0;
+  font-size: 18px;
+  padding: 6px 15px;
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+}
+.searchBar ul{
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 1;
+  width: 280px;
+  padding: 0;
+  top: 45px;
+  overflow-y: scroll;
+  list-style-type: none;
+  max-height: 150px;
+  background-color: #1d2227;
+}
+.searchBar ul li{
+  padding: 10px 0;
 }
