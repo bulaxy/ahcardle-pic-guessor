@@ -71,10 +71,10 @@ function App() {
   return (
     <div className="App">
       <h1>
-        AHCardle Card Guessor - Pic
+        AHCardle - Pic Guessor
         <Modal
           trigger={<Icon name="question circle outline" />}
-          header="AH Cardle"
+          header="AH Cardle Pic Guessor"
           content={
             <Container fluid>
               <p>Test your Arkham card pool knowledge skills!</p>
