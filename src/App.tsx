@@ -91,8 +91,6 @@ function App() {
           <Segment
             stacked
             style={{
-              width: "25vw",
-              height: "25vw",
               overflow: "hidden",
               margin: "auto",
               border: 0,
@@ -102,9 +100,9 @@ function App() {
             <img
               src={`https://arkhamdb.com/${answer?.imagesrc}`}
               style={{
-                margin: `${sizeMultiplier * -5}vw ${sizeMultiplier * -12}vw`,
-                height: `${sizeMultiplier * 42}vw`,
-                width: `${sizeMultiplier * 30}vw`,
+                margin: `${sizeMultiplier * -5}rem ${sizeMultiplier * -12}rem`,
+                height: `${sizeMultiplier * 42}rem`,
+                width: `${sizeMultiplier * 30}rem`,
               }}
             />
           </Segment>
