@@ -16,6 +16,8 @@ import {
   Segment,
 } from "semantic-ui-react";
 
+const ZOOM_OUT_RATE: number= 1
+
 function App() {
   const [answer, setAnswer] = useState<card>(
     dataObjects[Math.floor(Math.random() * dataObjects.length)]
@@ -56,7 +58,7 @@ function App() {
           setValue("");
         }, 300);
         if (sizeMultiplier > 2) {
-          setSizeMultiplier((prev) => prev - 0.5);
+          setSizeMultiplier((prev) => prev - ZOOM_OUT_RATE);
         }
       }
     }
