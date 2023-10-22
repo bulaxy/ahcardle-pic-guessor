@@ -16,7 +16,7 @@ import {
   Segment,
 } from "semantic-ui-react";
 
-const ZOOM_OUT_RATE: number= 1
+const ZOOM_OUT_RATE: number = 1;
 
 function App() {
   const [answer, setAnswer] = useState<card>(
@@ -27,6 +27,7 @@ function App() {
   const [animation, setAnimation] = useState<string>("");
   const [win, setWin] = useState(false);
   const [value, setValue] = useState<string>();
+  const [ogToggle, setOgToggle] = useState<boolean>(true);
 
   const initReset = () => {
     setAnimation("");
@@ -81,7 +82,8 @@ function App() {
             <Container fluid>
               <p>Test your Arkham card pool knowledge skills!</p>
               <p>
-                Look at the picture, to guess the card, wrong guess, the pic will zoom out a little bit (until a maximum)
+                Look at the picture, to guess the card, wrong guess, the pic
+                will zoom out a little bit (until a maximum)
               </p>
             </Container>
           }
@@ -90,27 +92,43 @@ function App() {
       </h1>
       <Grid textAlign="center" verticalAlign="middle">
         <Grid.Column style={{ maxWidth: 450 }}>
-          <Segment
-            stacked
-            style={{
-              overflow: "hidden",
-              margin: "auto",
-              border: 0,
-            }}
-            className="segment"
-          >
+          {win && ogToggle ? (
             <img
               src={`https://arkhamdb.com/${answer?.imagesrc}`}
               style={{
-                margin: `${sizeMultiplier * -5}rem ${sizeMultiplier * -12}rem`,
-                height: `${sizeMultiplier * 42}rem`,
-                width: `${sizeMultiplier * 30}rem`,
+                // margin: `${sizeMultiplier * -5}rem ${sizeMultiplier * -12}rem`,
+                height: `420px`,
+                width: `300px`,
               }}
             />
-          </Segment>
+          ) : (
+            <Segment
+              stacked
+              style={{
+                overflow: "hidden",
+                margin: "auto",
+                border: 0,
+              }}
+              className="segment"
+            >
+              <img
+                src={`https://arkhamdb.com/${answer?.imagesrc}`}
+                style={{
+                  margin: `${sizeMultiplier * -5}rem ${
+                    sizeMultiplier * -12
+                  }rem`,
+                  height: `${sizeMultiplier * 42}rem`,
+                  width: `${sizeMultiplier * 30}rem`,
+                }}
+              />
+            </Segment>
+          )}
           <Form size="large">
             {win ? (
+              <>
+              <Button onClick={() => setOgToggle(!ogToggle)} content={`Toggle to ${ogToggle?'last guess':'full card'}!`} />
               <Button onClick={() => initReset()} content="Play again!" />
+              </>
             ) : (
               <div className={`searchBar ${animation}`}>
                 <Dropdown
