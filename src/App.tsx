@@ -64,7 +64,12 @@ function App() {
     setSizeMultiplier(8);
   }, [setting]);
 
-  useEffect(()=>{console.log(answer)},[answer])
+  useEffect(()=>{
+    console.log(answer)
+    if(!answer){
+      setAnswer(dataObjects[Math.floor(Math.random() * dataObjects.length)]);
+    }
+  },[answer])
 
   const initReset = () => {
     setAnimation("");
